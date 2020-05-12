@@ -1,0 +1,18 @@
+beautifulsoup4==4.8.1
+PySocks	== 1.7.1	
+beautiful == 0.0.2	
+beautifulsoup4	== 4.8.1	
+certifi	== 2019.11.28	
+chardet	== 3.0.4	
+config	== 0.4.2	
+idna == 2.8	
+pip == 20.0.2	
+pyowm == 2.0.0	
+pytelegrambotapi == 3.6.7	
+requests == 2.7.0	
+setuptools == 40.8.0	
+six == 1.14.0	
+soup == 0.1.0	
+soupsieve == 1.9.5	
+urllib3	== 1.25.7	
+vk-api	== 11.7.0	
