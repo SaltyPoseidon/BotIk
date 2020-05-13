@@ -1,0 +1,14 @@
+[Unit]
+Description=Vk Bot
+After=network.target
+
+[Service]
+User=salty
+Group=salty
+
+WorkingDirectory=/home/salty/
+Environment="PYTHONPATH=/home/salty/"
+ExecStart=/home/salty/.venv/bin/python /home/salty/ubuntu18/vkbot2.0.py
+
+[Install]
+WantedBy=multi-user.target
