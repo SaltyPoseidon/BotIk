@@ -27,14 +27,23 @@ def pars(base_url, headers):
     session = requests.Session()
     request = session.get(base_url, headers=headers)
     if request.status_code == 200:
-        soup = bs(request.content, 'html.parser')
-        divs = soup.find('div', attrs={'class':"blog_content"})
-        date = divs.find('div', attrs={'class':'modnews-date'}).text
-        title = divs.find('h4', attrs={'class': "newsflash-title"}).text
-        description = divs.find('p').text
-        href = divs.find('a')['href']
-        text = (date + " " + title + " " + description + " " + 'http://meneger23.ru/' + href)
-        return text
+        try:
+            soup = bs(request.content, 'html.parser')
+            divs = soup.find('div', attrs={'class':"blog_content"})
+            date = divs.find('div', attrs={'class':'modnews-date'}).text
+            title = divs.find('h4', attrs={'class': "newsflash-title"}).text
+            description = divs.find('p').text
+            href = divs.find('a')['href']
+            text = (date + " " + title + " " + description + " " + 'http://meneger23.ru/' + href)
+            return text
+        except:
+            soup = bs(request.content, 'html.parser')
+            divs = soup.find('div', attrs={'class':"blog_content"})
+            date = divs.find('div', attrs={'class': 'modnews-date'}).text
+            title = divs.find('h4', attrs={'class': "newsflash-title"}).text
+            href = divs.find('a')['href']
+            text = (date + " " + title + " " + 'http://meneger23.ru/' + href)
+            return text
     else:
         print('ERROR')
 
@@ -105,10 +114,3 @@ for event in longpoll.listen():
 
 x = threading.Thread(target = pars, args = (base_url,headers))
 x.start()
-
-
-
-
-
-
-

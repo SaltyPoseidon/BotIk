@@ -6,9 +6,9 @@ After=network.target
 User=salty
 Group=salty
 
-WorkingDirectory=/home/salty/
-Environment="PYTHONPATH=/home/salty/"
-ExecStart=/home/salty/.venv/bin/python /home/salty/ubuntu18/vkbot2.0.py
+WorkingDirectory=/home/salty/BotIk/
+Environment="PYTHONPATH=/home/salty/BotIk"
+ExecStart=/home/salty/BotIk/.venv/bin/python /home/salty/BotIk/vkbot2.0.py
 
 [Install]
 WantedBy=multi-user.target
