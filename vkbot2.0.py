@@ -21,7 +21,7 @@ ring = '1 урок:  8:00 — 8:40\n2 урок:  8:45 — 9:25\n3 урок:  9:5
 
 #Функции
 
-Users = [524380200]
+Users = []
 
 def pars(base_url, headers):
     session = requests.Session()
@@ -55,20 +55,24 @@ def sendinio():
     actual = 'da'
     new = pars(base_url, headers)
     while True:
-        time.sleep(900)
-        if new != actual:
-            actual = new
-            for i in Users:
-                vk.messages.send(
-                    user_id = int(i),
-                    random_id = get_random_id(),
-                    message=pars(base_url,headers)
-                )
+        try:
+            time.sleep(900)
+            if new != actual:
+                actual = new
+                for i in Users:
+                    vk.messages.send(
+                        user_id = int(i),
+                        random_id = get_random_id(),
+                        message=pars(base_url,headers)
+                    )
+        except:
+            continue
+
+x = threading.Thread(target = sendinio, args = ())
+x.start()
 
 while True:
     try:
-        x = threading.Thread(target = sendinio, args = ())
-        x.start()
         for event in longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me and event.text:
                 # Слушаем longpoll, если пришло сообщение то:
