@@ -21,7 +21,7 @@ ring = '1 урок:  8:00 — 8:40\n2 урок:  8:45 — 9:25\n3 урок:  9:5
 
 #Функции
 
-Users = []
+Users = [524380200]
 
 def pars(base_url, headers):
     session = requests.Session()
@@ -65,52 +65,57 @@ def sendinio():
                     message=pars(base_url,headers)
                 )
 
-for event in longpoll.listen():
-    if event.type == VkEventType.MESSAGE_NEW and event.to_me and event.text:
-        # Слушаем longpoll, если пришло сообщение то:
-        if event.text == 'Новости' or event.text == 'новости':  # Если написали заданную фразу
-            Users.append(event.user_id)  # Добавляем идентификатор пользователя в базу данных
-            print(event.user_id)
-            print(Users)
-            MUsers = Users
-            Users = set(Users)
-            Users = list(Users)
-            print(Users)
-            print(MUsers)
-            if MUsers == Users:
-                f = open('bub.txt', 'a')
-                f.write(str(event.user_id) + '\n')
-                f.close()
-                vk.messages.send(
-                    user_id=event.user_id,
-                    random_id=get_random_id(),
-                    message='Отлично, вы подписались на рассылку!\n' + pars(base_url,headers)
-                )
-            else:
-                vk.messages.send(
-                    user_id=event.user_id,
-                    random_id=get_random_id(),
-                    message='Вы уже подписались на рассылку!'
-                )
-        elif event.text == 'Расписание' or event.text == 'расписание':  # Если написали заданную фразу
-            vk.messages.send(
-                user_id=event.user_id,
-                random_id=get_random_id(),
-                message='Вот расписание звонков:\n' + ring
-            )
-        elif event.text == 'Оценки' or event.text == 'оценки':
-            vk.messages.send(
-                user_id=event.user_id,
-                random_id=get_random_id(),
-                message='Для получения уведомлений об упеваемости введите логин и пароль Вконтакте:\n(Первым сообщением нужно отправить логин, а вторым - пароль\n'
+while True:
+    try:
+        x = threading.Thread(target = sendinio, args = ())
+        x.start()
+        for event in longpoll.listen():
+            if event.type == VkEventType.MESSAGE_NEW and event.to_me and event.text:
+                # Слушаем longpoll, если пришло сообщение то:
+                if event.text == 'Новости' or event.text == 'новости':  # Если написали заданную фразу
+                    Users.append(event.user_id)  # Добавляем идентификатор пользователя в базу данных
+                    print(event.user_id)
+                    print(Users)
+                    MUsers = Users
+                    Users = set(Users)
+                    Users = list(Users)
+                    print(Users)
+                    print(MUsers)
+                    if MUsers == Users:
+                        f = open('bub.txt', 'a')
+                        f.write(str(event.user_id) + '\n')
+                        f.close()
+                        vk.messages.send(
+                            user_id=event.user_id,
+                            random_id=get_random_id(),
+                            message='Отлично, вы подписались на рассылку!\n' + pars(base_url,headers)
+                        )
+                    else:
+                        vk.messages.send(
+                            user_id=event.user_id,
+                            random_id=get_random_id(),
+                            message='Вы уже подписались на рассылку!'
+                        )
+                elif event.text == 'Расписание' or event.text == 'расписание':  # Если написали заданную фразу
+                    vk.messages.send(
+                        user_id=event.user_id,
+                        random_id=get_random_id(),
+                        message='Вот расписание звонков:\n' + ring
+                    )
+                elif event.text == 'Оценки' or event.text == 'оценки':
+                    vk.messages.send(
+                        user_id=event.user_id,
+                        random_id=get_random_id(),
+                        message='Для получения уведомлений об упеваемости введите логин и пароль Вконтакте:\n(Первым сообщением нужно отправить логин, а вторым - пароль\n'
 
-            )
-        else:
-            vk.messages.send(
-                user_id=event.user_id,
-                random_id=get_random_id(),
-                message=twex
-            )
+                    )
+                else:
+                    vk.messages.send(
+                        user_id=event.user_id,
+                        random_id=get_random_id(),
+                        message=twex
+                    )
+    except:
+        continue
 
-x = threading.Thread(target = pars, args = (base_url,headers))
-x.start()
+
