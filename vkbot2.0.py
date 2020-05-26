@@ -60,13 +60,16 @@ def sendinio():
             if new != actual:
                 actual = new
                 for i in Users:
+                    print('sdsdsds')
                     vk.messages.send(
                         user_id = int(i),
                         random_id = get_random_id(),
                         message=pars(base_url,headers)
                     )
         except:
+            print('1')
             continue
+
 
 x = threading.Thread(target = sendinio, args = ())
 x.start()
@@ -120,6 +123,7 @@ while True:
                         message=twex
                     )
     except:
+        print('2')
         continue
 
 
